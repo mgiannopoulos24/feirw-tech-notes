@@ -1,0 +1,2 @@
+# technotesgr
+live.learn.code
