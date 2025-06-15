@@ -1,2 +1,1 @@
-# technotesgr
-live.learn.code
+# Here are your Instructions
