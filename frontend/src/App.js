@@ -14,6 +14,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Fetch data on component mount
   useEffect(() => {
@@ -106,6 +107,11 @@ function App() {
     setScore(0);
   };
 
+  const handleNavClick = (tab) => {
+    setActiveTab(tab);
+    setIsMenuOpen(false);
+  };
+
   const renderHome = () => (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100">
       {/* Hero Section */}
@@ -116,17 +122,17 @@ function App() {
               <span className="text-2xl">💖</span>
             </div>
           </div>
-          <h1 className="text-5xl font-bold mb-4">TechNotesGR</h1>
-          <p className="text-xl mb-8">Οι καλύτερες σημειώσεις για ΑΕΠΠ - Πανελλαδικές Εξετάσεις</p>
-          <p className="text-lg opacity-90">Πληροφορική • 3η Λυκείου • Επιτυχία</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">TechNotesGR</h1>
+          <p className="text-lg sm:text-xl mb-8">Οι καλύτερες σημειώσεις για ΑΕΠΠ - Πανελλαδικές Εξετάσεις</p>
+          <p className="text-base sm:text-lg opacity-90">Πληροφορική • 3η Λυκείου • Επιτυχία</p>
         </div>
       </div>
 
       {/* Features Section */}
       <div className="py-16">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Τι Προσφέρουμε</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Τι Προσφέρουμε</h2>
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">📚</span>
@@ -159,8 +165,8 @@ function App() {
   const renderNotes = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Σημειώσεις</h1>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Σημειώσεις</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {notes.map((note) => (
             <div key={note.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{note.title}</h3>
@@ -183,11 +189,11 @@ function App() {
   const renderQuiz = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Quiz ΑΕΠΠ</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Quiz ΑΕΠΠ</h1>
         
         {!quizStarted ? (
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Ξεκινήστε το Quiz</h2>
+          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 text-center">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4">Ξεκινήστε το Quiz</h2>
             <p className="text-gray-600 mb-6">Εισάγετε το ψευδώνυμό σας για να συμμετάσχετε στο leaderboard</p>
             <input
               type="text"
@@ -199,16 +205,16 @@ function App() {
             <br />
             <button
               onClick={startQuiz}
-              className="bg-pink-500 text-white px-8 py-3 rounded-lg hover:bg-pink-600 transition-colors text-lg font-semibold"
+              className="bg-pink-500 text-white px-6 sm:px-8 py-3 rounded-lg hover:bg-pink-600 transition-colors text-base sm:text-lg font-semibold"
             >
               Ξεκινήστε το Quiz
             </button>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
             {showResult ? (
               <div className="text-center">
-                <h2 className="text-2xl font-semibold mb-4">Αποτέλεσμα</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Αποτέλεσμα</h2>
                 <div className="text-6xl mb-4">
                   {/* Result will be shown here */}
                 </div>
@@ -216,7 +222,7 @@ function App() {
             ) : quizQuestions.length > 0 && (
               <div>
                 <div className="mb-6">
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
                     <span className="text-sm text-gray-600">
                       Ερώτηση {currentQuestion + 1} από {quizQuestions.length}
                     </span>
@@ -232,7 +238,7 @@ function App() {
                   </div>
                 </div>
                 
-                <h2 className="text-xl font-semibold mb-6">
+                <h2 className="text-lg sm:text-xl font-semibold mb-6">
                   {quizQuestions[currentQuestion]?.question}
                 </h2>
                 
@@ -265,9 +271,9 @@ function App() {
   const renderLeaderboard = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Leaderboard</h1>
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-xl font-semibold mb-6 text-center">Κατάταξη Μήνα</h2>
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Leaderboard</h1>
+        <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+          <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center">Κατάταξη Μήνα</h2>
           {leaderboard.length === 0 ? (
             <p className="text-center text-gray-600">Δεν υπάρχουν ακόμα συμμετοχές αυτό τον μήνα</p>
           ) : (
@@ -275,10 +281,10 @@ function App() {
               {leaderboard.map((entry, index) => (
                 <div key={entry.nickname} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-4">
-                    <span className="text-2xl font-bold text-pink-600">#{index + 1}</span>
-                    <span className="font-semibold">{entry.nickname}</span>
+                    <span className="text-xl sm:text-2xl font-bold text-pink-600">#{index + 1}</span>
+                    <span className="font-semibold text-sm sm:text-base">{entry.nickname}</span>
                   </div>
-                  <span className="text-lg font-bold text-gray-800">{entry.total_points} πόντοι</span>
+                  <span className="text-base sm:text-lg font-bold text-gray-800">{entry.total_points} πόντοι</span>
                 </div>
               ))}
             </div>
@@ -299,22 +305,22 @@ function App() {
   const renderAbout = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Σχετικά με εμάς</h1>
+        <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Σχετικά με εμάς</h1>
           
           <div className="prose max-w-none">
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-base sm:text-lg text-gray-700 mb-6">
               Καλώς ήρθατε στο TechNotesGR! Είμαι ένας καθηγητής πληροφορικής που στοχεύει να βοηθήσει 
               τους μαθητές της Γ' Λυκείου να επιτύχουν στις Πανελλαδικές εξετάσεις ΑΕΠΠ.
             </p>
             
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Ο σκοπός μας</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Ο σκοπός μας</h2>
             <p className="text-gray-700 mb-6">
               Να παρέχουμε ποιοτικό εκπαιδευτικό υλικό και διαδραστικές δραστηριότητες που θα βοηθήσουν 
               τους μαθητές να κατανοήσουν την πληροφορική και να προετοιμαστούν αποτελεσματικά για τις εξετάσεις ΑΕΠΠ.
             </p>
             
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Τι προσφέρουμε</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Τι προσφέρουμε</h2>
             <ul className="list-disc list-inside text-gray-700 space-y-2 mb-6">
               <li>Ολοκληρωμένες σημειώσεις για αλγορίθμους και δομές δεδομένων</li>
               <li>Quiz με ερωτήσεις από παλιές πανελλαδικές εξετάσεις</li>
@@ -325,7 +331,7 @@ function App() {
               <li>Chatbot για άμεσες απαντήσεις σε ερωτήσεις ΑΕΠΠ</li>
             </ul>
 
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Στοιχεία Επικοινωνίας</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Στοιχεία Επικοινωνίας</h2>
             <div className="space-y-2 text-gray-700">
               <p>📧 Email: info@technotesgr.com</p>
               <p>📱 Instagram: @technotesgr</p>
@@ -351,7 +357,8 @@ function App() {
               <span className="text-xl font-bold text-gray-800">TechNotesGR</span>
             </div>
             
-            <div className="hidden md:flex space-x-8">
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex space-x-8">
               <button
                 onClick={() => setActiveTab('home')}
                 className={`py-2 px-4 rounded transition-colors ${
@@ -393,9 +400,115 @@ function App() {
                 Σχετικά
               </button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Side Drawer */}
+      <div className={`lg:hidden fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
+        <div className="p-6">
+          {/* Drawer Header */}
+          <div className="flex justify-between items-center mb-8">
+            {/* <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-pink-400 rounded flex items-center justify-center">
+                <span className="text-white text-sm">💖</span>
+              </div>
+              <span className="text-xl font-bold text-gray-800">TechNotesGR</span>
+            </div> */}
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 ml-auto"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Drawer Navigation Items */}
+          <div className="space-y-4">
+            <button
+              onClick={() => handleNavClick('home')}
+              className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
+                activeTab === 'home' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">🏠</span>
+                <span className="font-medium">Αρχική</span>
+              </div>
+            </button>
+            <button
+              onClick={() => handleNavClick('notes')}
+              className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
+                activeTab === 'notes' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">📚</span>
+                <span className="font-medium">Σημειώσεις</span>
+              </div>
+            </button>
+            <button
+              onClick={() => handleNavClick('quiz')}
+              className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
+                activeTab === 'quiz' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">🎯</span>
+                <span className="font-medium">Quiz</span>
+              </div>
+            </button>
+            <button
+              onClick={() => handleNavClick('leaderboard')}
+              className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
+                activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">🏆</span>
+                <span className="font-medium">Leaderboard</span>
+              </div>
+            </button>
+            <button
+              onClick={() => handleNavClick('about')}
+              className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
+                activeTab === 'about' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">ℹ️</span>
+                <span className="font-medium">Σχετικά</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Content */}
       {activeTab === 'home' && renderHome()}
