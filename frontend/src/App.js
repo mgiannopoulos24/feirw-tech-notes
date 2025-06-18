@@ -381,9 +381,9 @@ function App() {
                 Flashcards
                 </button>
               <button
-                onClick={() => setActiveTab('leaderboard')}
+                onClick={() => setActiveTab('flashcards')}
                 className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                  activeTab === 'flashcards'? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
                 Leaderboard
@@ -513,6 +513,7 @@ function App() {
       {activeTab === 'quiz' && renderQuiz()}
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
+      {activeTab === 'flashcards' && <div className="min-h-screen bg-pink-50 py-8"><h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Flashcards Coming Soon!</h1></div>}
     </div>
   );
 }
