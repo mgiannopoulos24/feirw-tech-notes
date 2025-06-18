@@ -122,23 +122,23 @@ function App() {
               <span className="text-2xl">💖</span>
             </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">TechNotesGR</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Technotesgr</h1>
           <p className="text-lg sm:text-xl mb-8">Οι καλύτερες σημειώσεις για ΑΕΠΠ - Πανελλαδικές Εξετάσεις</p>
-          <p className="text-base sm:text-lg opacity-90">Πληροφορική • 3η Λυκείου • Επιτυχία</p>
+          <p className="text-base sm:text-lg opacity-90">Πληροφορική Γ' Γενικού Λυκείου </p>
         </div>
       </div>
 
       {/* Features Section */}
       <div className="py-16">
         <div className="container mx-auto px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Τι Προσφέρουμε</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Τι προσφέρουμε</h2>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">📚</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">Σημειώσεις</h3>
-              <p className="text-gray-600">Ολοκληρωμένες σημειώσεις για όλα τα θέματα ΑΕΠΠ</p>
+              <p className="text-gray-600">Σημειώσεις που καλύπτουν σε βάθος όλη την θεωρία και τις μεθοδολογίες της ύλης </p>
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
@@ -146,7 +146,7 @@ function App() {
                 <span className="text-2xl">🎯</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">Quiz</h3>
-              <p className="text-gray-600">Δοκιμάστε τις γνώσεις σας σε αλγορίθμους και δομές δεδομένων</p>
+              <p className="text-gray-600">Τεστάρετε τις γνώσεις σας σε όλη την θεωρία του ΑΕΠΠ</p>
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
@@ -154,7 +154,7 @@ function App() {
                 <span className="text-2xl">🏆</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">Leaderboard</h3>
-              <p className="text-gray-600">Ανταγωνιστείτε με άλλους μαθητές και κερδίστε δώρα</p>
+              <p className="text-gray-600">Ανταγωνιστείτε με άλλους μαθητές!</p>
             </div>
           </div>
         </div>
@@ -189,12 +189,12 @@ function App() {
   const renderQuiz = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Quiz ΑΕΠΠ</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Quiz Θεωρίας</h1>
         
         {!quizStarted ? (
           <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 text-center">
             <h2 className="text-xl sm:text-2xl font-semibold mb-4">Ξεκινήστε το Quiz</h2>
-            <p className="text-gray-600 mb-6">Εισάγετε το ψευδώνυμό σας για να συμμετάσχετε στο leaderboard</p>
+            <p className="text-gray-600 mb-6">Εισάγετε το όνομα σας για να συμμετάσχετε στο leaderboard</p>
             <input
               type="text"
               placeholder="Ψευδώνυμο"
@@ -273,9 +273,9 @@ function App() {
       <div className="container mx-auto px-6 max-w-4xl">
         <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Leaderboard</h1>
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
-          <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center">Κατάταξη Μήνα</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center">Κατάταξη</h2>
           {leaderboard.length === 0 ? (
-            <p className="text-center text-gray-600">Δεν υπάρχουν ακόμα συμμετοχές αυτό τον μήνα</p>
+            <p className="text-center text-gray-600">Δεν υπάρχουν ακόμα συμμετοχές</p>
           ) : (
             <div className="space-y-3">
               {leaderboard.map((entry, index) => (
@@ -291,11 +291,7 @@ function App() {
           )}
           
           <div className="mt-8 p-4 bg-pink-50 rounded-lg">
-            <h3 className="font-semibold text-pink-800 mb-2">🎁 Μηνιαίο Βραβείο</h3>
-            <p className="text-sm text-pink-700">
-              Ο πρώτος κάθε μήνα κερδίζει τσάντα με διαφημιστικά δώρα! 
-              (Απαιτούνται τουλάχιστον 15 συμμετοχές)
-            </p>
+            <h3 className="font-semibold text-pink-800 mb-2">Do your quiz,check your knowledge</h3>
           </div>
         </div>
       </div>
@@ -310,33 +306,29 @@ function App() {
           
           <div className="prose max-w-none">
             <p className="text-base sm:text-lg text-gray-700 mb-6">
-              Καλώς ήρθατε στο TechNotesGR! Είμαι ένας καθηγητής πληροφορικής που στοχεύει να βοηθήσει 
-              τους μαθητές της Γ' Λυκείου να επιτύχουν στις Πανελλαδικές εξετάσεις ΑΕΠΠ.
+              Καλώς ήρθατε στο technotesgr! Είμαι μία καθηγήτρια πληροφορικής που στοχεύει να βοηθήσει 
+              τους μαθητές της Γ' Λυκείου να επιτύχουν στις Πανελλαδικές εξετάσεις Πληροφορικής.
             </p>
             
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Ο σκοπός μας</h2>
             <p className="text-gray-700 mb-6">
               Να παρέχουμε ποιοτικό εκπαιδευτικό υλικό και διαδραστικές δραστηριότητες που θα βοηθήσουν 
-              τους μαθητές να κατανοήσουν την πληροφορική και να προετοιμαστούν αποτελεσματικά για τις εξετάσεις ΑΕΠΠ.
+              τους μαθητές να κατανοήσουν σε βάθος την πληροφορική και να προετοιμαστούν αποτελεσματικά για τις εξετάσεις τους.
             </p>
             
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Τι προσφέρουμε</h2>
             <ul className="list-disc list-inside text-gray-700 space-y-2 mb-6">
-              <li>Ολοκληρωμένες σημειώσεις για αλγορίθμους και δομές δεδομένων</li>
+              <li>Ολοκληρωμένες σημειώσεις εφ'όλης της ύλης</li>
               <li>Quiz με ερωτήσεις από παλιές πανελλαδικές εξετάσεις</li>
-              <li>Βαθμολογία και leaderboard για ανταγωνισμό</li>
               <li>Flashcards για εύκολη επανάληψη εννοιών</li>
               <li>Παιχνίδια οπτικοποίησης αλγορίθμων (δυαδική αναζήτηση, γραμμική αναζήτηση)</li>
               <li>Διαδικτυακά μαθήματα πληροφορικής</li>
-              <li>Chatbot για άμεσες απαντήσεις σε ερωτήσεις ΑΕΠΠ</li>
             </ul>
 
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Στοιχεία Επικοινωνίας</h2>
             <div className="space-y-2 text-gray-700">
-              <p>📧 Email: info@technotesgr.com</p>
-              <p>📱 Instagram: @technotesgr</p>
-              <p>🎥 YouTube: TechNotesGR Channel</p>
-              <p>📱 TikTok: @technotesgr</p>
+              <p> Instagram: @technotesgr</p>
+              <p> TikTok: @technotesgr</p>
             </div>
           </div>
         </div>
@@ -354,7 +346,7 @@ function App() {
               <div className="w-8 h-8 bg-pink-400 rounded flex items-center justify-center">
                 <span className="text-white text-sm">💖</span>
               </div>
-              <span className="text-xl font-bold text-gray-800">TechNotesGR</span>
+              <span className="text-xl font-bold text-gray-800">technotesgr</span>
             </div>
             
             {/* Desktop Navigation */}
@@ -373,7 +365,7 @@ function App() {
                   activeTab === 'notes' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
-                Σημειώσεις
+                Οι σημειώσεις μας
               </button>
               <button
                 onClick={() => setActiveTab('quiz')}
