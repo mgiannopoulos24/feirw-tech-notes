@@ -347,6 +347,7 @@ function App() {
             </div>
             
             {/* Desktop Navigation */}
+            
             <div className="hidden lg:flex space-x-8">
               <button
                 onClick={() => setActiveTab('home')}
@@ -378,12 +379,12 @@ function App() {
                   activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
-                Flashcards
+                Flashcards{ /*its up*/}
                 </button>
               <button
-                onClick={() => setActiveTab('flashcards')}
+                onClick={() => setActiveTab('leaderboard')}
                 className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'flashcards'? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                  activeTab === 'leaderboard' ?  'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
                 Leaderboard
