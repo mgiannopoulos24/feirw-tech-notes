@@ -378,6 +378,14 @@ function App() {
                   activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
+                Flashcards
+                </button>
+              <button
+                onClick={() => setActiveTab('leaderboard')}
+                className={`py-2 px-4 rounded transition-colors ${
+                  activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                }`}
+              >
                 Leaderboard
               </button>
               <button
