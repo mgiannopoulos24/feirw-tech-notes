@@ -374,9 +374,9 @@ function App() {
                 Quiz
               </button>
               <button
-                onClick={() => setActiveTab('leaderboard')}
+                onClick={() => setActiveTab('flashcards')}
                 className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                  activeTab === 'flashcards ' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
                 Flashcards{ /*its up*/}
