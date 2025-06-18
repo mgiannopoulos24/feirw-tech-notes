@@ -275,7 +275,7 @@ function App() {
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
           <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center">Κατάταξη</h2>
           {leaderboard.length === 0 ? (
-            <p className="text-center text-gray-600">Δεν υπάρχουν ακόμα συμμετοχές</p>
+            <p className= "font-semibold text-pink-800 mb-2">Δεν υπάρχουν ακόμα συμμετοχές</p>
           ) : (
             <div className="space-y-3">
               {leaderboard.map((entry, index) => (
@@ -291,7 +291,6 @@ function App() {
           )}
           
           <div className="mt-8 p-4 bg-pink-50 rounded-lg">
-            <h3 className="font-semibold text-pink-800 mb-2">Do your quiz,check your knowledge</h3>
           </div>
         </div>
       </div>
@@ -320,9 +319,8 @@ function App() {
             <ul className="list-disc list-inside text-gray-700 space-y-2 mb-6">
               <li>Ολοκληρωμένες σημειώσεις εφ'όλης της ύλης</li>
               <li>Quiz με ερωτήσεις από παλιές πανελλαδικές εξετάσεις</li>
-              <li>Flashcards για εύκολη επανάληψη εννοιών</li>
-              <li>Παιχνίδια οπτικοποίησης αλγορίθμων (δυαδική αναζήτηση, γραμμική αναζήτηση)</li>
-              <li>Διαδικτυακά μαθήματα πληροφορικής</li>
+              <li>Flashcards για εύκολη επανάληψη εννοιών από την θεωρία μας</li>
+              <li>Παιχνίδια οπτικοποίησης αλγορίθμων (δυαδική αναζήτηση, γραμμική αναζήτηση,δέντρα,λίστες,γράφοι)</li>
             </ul>
 
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Στοιχεία Επικοινωνίας</h2>
@@ -344,7 +342,6 @@ function App() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-pink-400 rounded flex items-center justify-center">
-                <span className="text-white text-sm">💖</span>
               </div>
               <span className="text-xl font-bold text-gray-800">technotesgr</span>
             </div>
