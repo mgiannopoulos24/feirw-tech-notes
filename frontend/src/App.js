@@ -347,6 +347,7 @@ function App() {
             </div>
             
             {/* Desktop Navigation */}
+            
             <div className="hidden lg:flex space-x-8">
               <button
                 onClick={() => setActiveTab('home')}
@@ -373,20 +374,20 @@ function App() {
                 Quiz
               </button>
               <button
-                onClick={() => setActiveTab('leaderboard')}
-                className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
-                }`}
-              >
-                Leaderboard
-                </button>
-              <button
                 onClick={() => setActiveTab('flashcards')}
                 className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'flashcards'? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                  activeTab === 'flashcards ' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
                 Flashcards
+                </button>
+              <button
+                onClick={() => setActiveTab('leaderboard')}
+                className={`py-2 px-4 rounded transition-colors ${
+                  activeTab === 'leaderboard' ?  'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
+                }`}
+              >
+                Leaderboard
               </button>
               <button
                 onClick={() => setActiveTab('about')}
