@@ -378,7 +378,7 @@ function App() {
                   activeTab === 'leaderboard' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
-                Flashcards
+                Leaderboard
                 </button>
               <button
                 onClick={() => setActiveTab('flashcards')}
@@ -386,7 +386,7 @@ function App() {
                   activeTab === 'flashcards'? 'bg-pink-500 text-white' : 'text-gray-700 hover:text-pink-500'
                 }`}
               >
-                Leaderboard
+                Flashcards
               </button>
               <button
                 onClick={() => setActiveTab('about')}
