@@ -44,5 +44,3 @@ Contributions, issues and feature requests are welcome!
 
 Give a ⭐️ if this project helped you!
 
-We hope this platform makes Informatics more accessible, interactive, and fun for students preparing for their academic future!
-
