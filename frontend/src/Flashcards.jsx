@@ -5,17 +5,17 @@ const Flashcards = () => {
   const cards = [
     {
       id: 1,
-      frontHTML: <div>Τι είναι η μεταβλητή;</div>,
+      frontHTML: <div className="pt-10 text-center">Τι είναι η μεταβλητή;</div>,
       backHTML: <>Θέση μνήμης στην οποία μπορούμε να αποθηκεύσουμε δεδομένα.</>,
     },
     {
       id: 2,
-      frontHTML: <>Ποια εντολή χρησιμοποιούμε για είσοδο δεδομένων στην ΓΛΩΣΣΑ;</>,
+      frontHTML: <div className="pt-10 text-center">Ποια εντολή χρησιμοποιούμε για είσοδο δεδομένων στην ΓΛΩΣΣΑ;</div>,
       backHTML: <>ΔΙΑΒΑΣΕ</>,
     },
     {
       id: 3,
-      frontHTML: <>Ποια εντολή χρησιμοποιούμε για έξοδο δεδομένων στην ΓΛΩΣΣΑ;</>,
+      frontHTML: <div className="pt-10 text-center">Ποια εντολή χρησιμοποιούμε για έξοδο δεδομένων στην ΓΛΩΣΣΑ;</div>,
       backHTML: <>ΓΡΑΨΕ</>,
     },
   ];
