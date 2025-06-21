@@ -516,14 +516,13 @@ function App() {
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
       {activeTab === 'flashcards' && (
-  <div className="min-h-screen bg-pink-50 py-8">
-    <div className="container mx-auto px-6 max-w-4xl">
+      <div className="min-h-screen bg-pink-50 py-8">
+      <div className="container mx-auto px-6 max-w-4xl">
       <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Flashcards Επανάληψης</h1>
       <Flashcards />
-    </div>
-  </div>
-)}
-
+      </div>
+      </div>
+      )}
     </div>
   );
   
