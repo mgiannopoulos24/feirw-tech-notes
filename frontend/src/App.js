@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Flashcards from './Flashcards';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
@@ -515,6 +516,14 @@ function App() {
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
       {activeTab === 'flashcards' && <div className="min-h-screen bg-pink-50 py-8"><h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Flashcards Coming Soon!</h1></div>}
+    </div>
+  );
+  
+    return (
+    <div className="App">
+      <h1>Καλωσήρθες στο site μου!</h1>
+      {/* Εδώ θα εμφανιστούν οι flashcards */}
+      <Flashcards />
     </div>
   );
 }

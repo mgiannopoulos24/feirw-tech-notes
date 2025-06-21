@@ -7947,7 +7947,7 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-dom@^19.0.0, react-dom@>=18:
+react-dom@^19.0.0, react-dom@>=17.0.2, react-dom@>=18:
   version "19.1.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.1.0.tgz"
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
@@ -7973,6 +7973,11 @@ react-is@^18.0.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
+
+react-quizlet-flashcard@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/react-quizlet-flashcard/-/react-quizlet-flashcard-3.0.0.tgz"
+  integrity sha512-Q2noz6MgQyeGn8qs/2ohj41j9jk/adcfDcJQZaVXF2bYrczcad4ZCbjr2MhjarVZ+HUyYv5MPckHym2xsNk3Xg==
 
 react-refresh@^0.11.0, "react-refresh@>=0.10.0 <1.0.0":
   version "0.11.0"
@@ -8049,7 +8054,7 @@ react-scripts@^5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react@^19.0.0, react@^19.1.0, "react@>= 16", react@>=18:
+react@^19.0.0, react@^19.1.0, "react@>= 16", react@>=17.0.2, react@>=18:
   version "19.1.0"
   resolved "https://registry.npmjs.org/react/-/react-19.1.0.tgz"
   integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==
