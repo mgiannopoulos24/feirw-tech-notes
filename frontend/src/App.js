@@ -168,7 +168,7 @@ function App() {
       <div className="container mx-auto px-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Σημειώσεις</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {notes.map((note) => (
+          {/* {notes.map((note) => (
             <div key={note.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{note.title}</h3>
               <p className="text-sm text-pink-600 mb-3">{note.subject}</p>
@@ -176,12 +176,12 @@ function App() {
               <div className="flex justify-between items-center">
                 <span className="text-2xl font-bold text-pink-600">€{note.price}</span>
                 <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors">
-                  Αγορά
+                Αγορά
                 </button>
               </div>
               <p className="text-xs text-gray-500 mt-2">{note.download_count} λήψεις</p>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
@@ -298,6 +298,20 @@ function App() {
     </div>
   );
 
+  const renderflashbacks = () => (
+    <div className="min-h-screen bg-pink-50 py-8">
+      <div className="container mx-auto px-6 max-w-4xl">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8 text-pink-600">Flashbacks</h1>
+        <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center">
+          Εδώ θα βρείτε flashbacks για να επαναλάβετε τις έννοιες της θεωρίας μας.
+        </p>
+        
+        <Flashcards />
+      </div>
+    </div>
+  );
+
+
   const renderAbout = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
@@ -337,6 +351,7 @@ function App() {
 
   return (
     <div className="App">
+
       {/* Navigation */}
       <nav className="bg-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-6">
@@ -400,6 +415,8 @@ function App() {
               </button>
             </div>
 
+
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -449,6 +466,7 @@ function App() {
           </div>
 
           {/* Drawer Navigation Items */}
+
           <div className="space-y-4">
             <button
               onClick={() => handleNavClick('home')}
@@ -461,6 +479,9 @@ function App() {
                 <span className="font-medium">Αρχική</span>
               </div>
             </button>
+
+              {/* Notes Button */}
+
             <button
               onClick={() => handleNavClick('notes')}
               className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
@@ -472,6 +493,9 @@ function App() {
                 <span className="font-medium">Σημειώσεις</span>
               </div>
             </button>
+
+              {/* Quiz Button */}
+
             <button
               onClick={() => handleNavClick('quiz')}
               className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
@@ -483,6 +507,9 @@ function App() {
                 <span className="font-medium">Quiz</span>
               </div>
             </button>
+
+            {/* Flashcards Button */}
+
             <button
               onClick={() => handleNavClick('leaderboard')}
               className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
@@ -494,17 +521,21 @@ function App() {
                 <span className="font-medium">Leaderboard</span>
               </div>
             </button>
+
+            {/* Flashcards Button */}
+
             <button
               onClick={() => handleNavClick('about')}
               className={`block w-full text-left py-4 px-4 rounded-lg transition-colors ${
                 activeTab === 'about' ? 'bg-pink-500 text-white' : 'text-gray-700 hover:bg-pink-50'
               }`}
             >
-              <div className="flex items-center space-x-3">
-                <span className="text-lg">ℹ️</span>
-                <span className="font-medium">Σχετικά</span>
-              </div>
+                <div className="flex items-center space-x-3">
+                    <span className="text-lg">ℹ️</span>
+                    <span className="font-medium">Σχετικά</span>
+                </div>
             </button>
+        
           </div>
         </div>
       </div>
@@ -515,14 +546,7 @@ function App() {
       {activeTab === 'quiz' && renderQuiz()}
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
-      {activeTab === 'flashcards' && (
-      <div className="min-h-screen bg-pink-50 py-8">
-      <div className="container mx-auto px-6 max-w-4xl">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Flashcards Επανάληψης</h1>
-      <Flashcards />
-      </div>
-      </div>
-      )}
+      {activeTab === 'flashcards' && renderflashbacks()}
     </div>
   );
   

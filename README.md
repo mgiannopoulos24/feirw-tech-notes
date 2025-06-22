@@ -13,7 +13,7 @@ This website was created with the goal of helping high school students (3rd grad
 - Quiz-based practice with questions from past national exams.
 - Each quiz awards points based on accuracy and completion.
 - A monthly **Leaderboard** showcases top-performing students using chosen nicknames (students are informed before submission).
-- The top student of the month receives a small reward pack with educational goodies.
+
   - In case of a tie, rewards are given to all students with the highest score.
   - A minimum of 15 active participants is required for the leaderboard to be valid.
 
@@ -21,7 +21,6 @@ This website was created with the goal of helping high school students (3rd grad
 - Interactive visualizations of key algorithms (e.g., Binary Search, Linear Search).
 - Crossword puzzles focused on Informatics definitions and theory.
 - Flashcards for memorizing key concepts.
-- Embedded chatbot for real-time help with questions.
 
 ## 📚 Additional Resources
 - **About** section with information about the creator and the project's mission.
@@ -44,3 +43,8 @@ Contributions, issues and feature requests are welcome!
 
 Give a ⭐️ if this project helped you!
 
+## Big thanks to :
+
+``https://github.com/ABSanthosh``
+ 
+for the flashcards' code in ReactJS.
