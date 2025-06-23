@@ -10,12 +10,12 @@ const Flashcards = () => {
       ? flashcards[selectedSetIndex].questions.map((card, idx) => ({
           id: card.id || idx + 1,
           frontHTML: (
-            <div className="flex h-full items-center justify-center text-center text-2xl">
+            <div className="flex h-full items-center justify-center text-center text-xl font-semibold">
               {card.front}
             </div>
           ),
           backHTML: (
-            <div className="flex h-full items-center justify-center text-center text-2xl">
+            <div className="flex h-full items-center justify-center text-center text-xl">
               {card.back}
             </div>
           ),
