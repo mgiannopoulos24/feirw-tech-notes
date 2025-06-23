@@ -25,10 +25,19 @@ const Notes = ({ notes }) => {
           )}
 
           <div className="flex gap-3 mb-4">
-            <a href={note.pdfUrl} target="_blank" rel="noopener noreferrer" className="text-sm underline text-blue-600 hover:text-blue-800">
+            <a
+              href={note.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm underline text-blue-600 hover:text-blue-800"
+            >
               Προβολή σε νέο παράθυρο
             </a>
-            <a href={note.pdfUrl} download className="text-sm bg-gray-100 px-3 py-1 rounded hover:bg-gray-200">
+            <a
+              href={note.pdfUrl}
+              download
+              className="text-sm bg-gray-100 px-3 py-1 rounded hover:bg-gray-200"
+            >
               Κατέβασε PDF
             </a>
           </div>

@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { quizzes } from "../utils/quizzes";
+import { quizzes } from '../utils/quizzes';
 
 const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showSolution, setShowSolution] = useState(false);
+
+  // Reset state when dialog is reopened or quiz changes
+  React.useEffect(() => {
+    setCurrent(0);
+    setSelected(null);
+    setShowSolution(false);
+  }, [isOpen, quiz]);
 
   if (!isOpen) return null;
 
@@ -31,13 +38,6 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
     setCurrent((prev) => prev - 1);
   };
 
-  // Reset state when dialog is reopened or quiz changes
-  React.useEffect(() => {
-    setCurrent(0);
-    setSelected(null);
-    setShowSolution(false);
-  }, [isOpen, quiz]);
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-pink-50 via-pink-100 to-pink-200 bg-opacity-95 p-4 z-50">
       <div className="flex flex-col w-full max-w-[1200px] min-h-[600px] rounded-3xl bg-white p-16 shadow-2xl border-4 border-pink-200">
@@ -45,7 +45,12 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
           <h3 className="text-2xl font-extrabold text-pink-700 mb-5 tracking-wide drop-shadow">
             Ερώτηση {current + 1} από {quiz.questions.length}
           </h3>
-          <button onClick={onClose} className="text-pink-300 hover:text-pink-500 text-2xl font-bold transition-colors">✕</button>
+          <button
+            onClick={onClose}
+            className="text-pink-300 hover:text-pink-500 text-2xl font-bold transition-colors"
+          >
+            ✕
+          </button>
         </div>
         <div className="flex flex-col flex-grow">
           <div className="mb-10 mt-10 text-pink-700 text-xl text-center flex-grow min-h-[120px] flex items-center justify-center font-medium">
@@ -54,25 +59,22 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
           <div className="flex flex-col gap-6 mb-16">
             {question.answers.map((ans, idx) => {
               // Determine color based on answer correctness
-              let base =
-                "rounded-xl px-6 py-3 border-2 transition-all font-semibold shadow-sm";
-              let color = "";
+              let base = 'rounded-xl px-6 py-3 border-2 transition-all font-semibold shadow-sm';
+              let color = '';
               if (selected !== null) {
                 if (ans.correct) {
-                  color =
-                    "bg-green-100 border-green-400 text-green-900";
+                  color = 'bg-green-100 border-green-400 text-green-900';
                 } else {
-                  color =
-                    "bg-red-100 border-red-400 text-red-900";
+                  color = 'bg-red-100 border-red-400 text-red-900';
                 }
                 if (selected !== idx) {
-                  color += " opacity-60";
+                  color += ' opacity-60';
                 } else {
-                  color += " scale-105";
+                  color += ' scale-105';
                 }
               } else {
                 color =
-                  "bg-white border-pink-200 text-pink-700 hover:bg-pink-100 hover:border-pink-400 hover:scale-105";
+                  'bg-white border-pink-200 text-pink-700 hover:bg-pink-100 hover:border-pink-400 hover:scale-105';
               }
               return (
                 <button
