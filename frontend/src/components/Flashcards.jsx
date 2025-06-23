@@ -45,9 +45,9 @@ const Flashcards = () => {
           {/* Κουμπί επιστροφής */}
           <button
             onClick={() => setSelectedSetIndex(null)}
-            className="px-5 py-2 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 text-base font-medium"
+            className="px-5 py-2 rounded-full text-black-600 hover:bg-pink-300 text-base font-medium"
           >
-            🔙 Πίσω στις ενότητες
+            🔙Πίσω στις ενότητες
           </button>
 
           {/* Flashcards ή μήνυμα αν δεν υπάρχουν */}

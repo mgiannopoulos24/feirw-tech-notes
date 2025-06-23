@@ -301,8 +301,7 @@ function App() {
   const renderflashbacks = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8 text-pink-600">Flashcards</h1>
-        <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center">
+        <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center font-semibold">
           Εδώ θα βρείτε flashcards για να επαναλάβετε τις έννοιες της θεωρίας μας.
         </p>
         
