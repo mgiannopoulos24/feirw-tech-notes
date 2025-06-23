@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Flashcards from './components/Flashcards.jsx';
+import Sim from './components/Sim.jsx';
+ 
 import QuizDialog from './components/QuizDialog.jsx';
 import QuizMenu from './components/QuizMenu.jsx';
 import { quizzes } from './utils/quizzes';
+
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
@@ -212,27 +215,12 @@ function App() {
   );
 
   const renderNotes = () => (
-    <div className="min-h-screen bg-pink-50 py-8">
-      <div className="container mx-auto px-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">
-          Σημειώσεις
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* {notes.map((note) => (
-            <div key={note.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">{note.title}</h3>
-              <p className="text-sm text-pink-600 mb-3">{note.subject}</p>
-              <p className="text-gray-600 mb-4">{note.preview}</p>
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-pink-600">€{note.price}</span>
-                <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors">
-                Αγορά
-                </button>
-              </div>
-              <p className="text-xs text-gray-500 mt-2">{note.download_count} λήψεις</p>
-            </div>
-          ))} */}
-        </div>
+     <div className="min-h-screen bg-pink-50 py-8">
+      <div className="container mx-auto px-6 max-w-4xl">
+        <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center font-semibold">
+          Εδώ θα βρείτε σημειώσεις για την θεωρία του ΑΕΠΠ.
+        </p> 
+      < Sim />
       </div>
     </div>
   );
@@ -298,9 +286,9 @@ function App() {
           Leaderboard
         </h1>
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
-          <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center">Κατάταξη</h2>
+          <h2 className="text-lg sm:text-2xl font-semibold mb-6 text-center">Κατάταξη</h2>
           {leaderboard.length === 0 ? (
-            <p className="font-semibold text-pink-800 mb-2">Δεν υπάρχουν ακόμα συμμετοχές</p>
+            <p className= "font-semibold text-black mb-2 text-xl bg-pink-100 rounded -lg">Δεν υπάρχουν ακόμα συμμετοχές</p>
           ) : (
             <div className="space-y-3">
               {leaderboard.map((entry, index) => (
@@ -321,14 +309,13 @@ function App() {
               ))}
             </div>
           )}
-
-          <div className="mt-8 p-4 bg-pink-50 rounded-lg"></div>
+        
         </div>
       </div>
     </div>
   );
 
-  const renderflashbacks = () => (
+  const renderflashcards = () => (
     <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
         <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center font-semibold">
@@ -609,6 +596,8 @@ function App() {
       {activeTab === 'quiz' && renderQuiz()}
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
+
+      {activeTab === 'flashcards' && renderflashcards()}
       {activeTab === 'flashcards' && (
         <div className="min-h-screen bg-pink-50 py-8">
           <div className="container mx-auto px-6 max-w-4xl">
@@ -621,6 +610,6 @@ function App() {
       )}
     </div>
   );
-}
+  }
 
 export default App;
