@@ -67,41 +67,41 @@ export const quizzes = [
     title: 'Στοίβα',
     number: '8',
     description: '',
-    questions: quiz_stack
+    questions: quiz_stack,
   },
   {
     id: 'quiz-9',
     title: 'Ουρά',
     number: '9',
     description: '',
-    questions: quiz_queue
+    questions: quiz_queue,
   },
   {
     id: 'quiz-10',
     title: 'Λίστες',
     number: '10',
     description: '',
-    questions: quiz_lists
+    questions: quiz_lists,
   },
   {
     id: 'quiz-11',
     title: 'Δένδρα',
     number: '11',
     description: '',
-    questions: quiz_trees
+    questions: quiz_trees,
   },
   {
     id: 'quiz-12',
     title: 'Αντικειμενοστραφής προγραμματισμός',
     number: '12',
     description: '',
-    questions: quiz_oop
+    questions: quiz_oop,
   },
   {
     id: 'quiz-13',
     title: 'Εκσφαλμάτωση',
     number: '13',
     description: '',
-    questions: quiz_debug
-  }
+    questions: quiz_debug,
+  },
 ];
