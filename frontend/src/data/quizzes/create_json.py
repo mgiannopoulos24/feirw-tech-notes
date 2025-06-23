@@ -13,12 +13,11 @@ def parse_statements(text):
         statements.append(statement.strip())
     return statements
 
-def create_questions(statements, category):
+def create_questions(statements):
     questions = []
     for idx, statement in enumerate(statements, 1):
         questions.append({
             "id": str(idx),
-            "category": category,
             "question": statement,
             "answers": [
                 {"text": "Σωστό", "correct": True},
@@ -28,17 +27,17 @@ def create_questions(statements, category):
     return questions
 
 def main():
-    if len(sys.argv) != 4:
-        print("Usage: python create_json.py input.txt output.json category")
+    if len(sys.argv) != 3:
+        print("Usage: python create_json.py input.txt output.json")
         return
 
-    input_file, output_file, category = sys.argv[1], sys.argv[2], sys.argv[3]
+    input_file, output_file = sys.argv[1], sys.argv[2]
 
     with open(input_file, encoding="utf-8") as f:
         text = f.read()
 
     statements = parse_statements(text)
-    questions = create_questions(statements, category)
+    questions = create_questions(statements)
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(questions, f, ensure_ascii=False, indent=2)
