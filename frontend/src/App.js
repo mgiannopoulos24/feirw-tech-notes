@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Flashcards from './components/Flashcards.jsx';
+import QuizDialog from './components/QuizDialog.jsx';
+import QuizMenu from './components/QuizMenu.jsx'; // <-- Add this import
+import { quizzes } from './utils/quizzes';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
@@ -16,6 +19,10 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isQuizDialogOpen, setIsQuizDialogOpen] = useState(false); // Add state for dialog
+  const [showQuizMenu, setShowQuizMenu] = useState(false); // <-- Add this
+  const [selectedQuiz, setSelectedQuiz] = useState(quizzes[0]); // Default to first quiz
+  const [categoryProgress, setCategoryProgress] = useState({}); // {quizId: Set of answered question indices}
 
   // Fetch data on component mount
   useEffect(() => {
@@ -98,6 +105,9 @@ function App() {
     setLoading(false);
   };
 
+  // Reset progress when menu is closed or quiz is (re)started
+  const resetProgress = () => setCategoryProgress({});
+
   const startQuiz = () => {
     if (!nickname.trim()) {
       alert('Παρακαλώ εισάγετε ψευδώνυμο');
@@ -106,11 +116,42 @@ function App() {
     setQuizStarted(true);
     setCurrentQuestion(0);
     setScore(0);
+    resetProgress(); // Reset progress on new quiz
+    setShowQuizMenu(true);
+  };
+
+  // Handler for selecting a quiz category
+  const handleQuizCategorySelect = (quiz) => {
+    setSelectedQuiz(quiz);
+    setIsQuizDialogOpen(true);
+    setShowQuizMenu(false);
   };
 
   const handleNavClick = (tab) => {
     setActiveTab(tab);
     setIsMenuOpen(false);
+  };
+
+  // When closing the menu, reset progress
+  const handleMenuClose = () => {
+    setShowQuizMenu(false);
+    setQuizStarted(false);
+    resetProgress();
+  };
+
+  // When closing the dialog, show menu again (do not reset progress)
+  const handleQuizDialogClose = () => {
+    setIsQuizDialogOpen(false);
+    setShowQuizMenu(true);
+  };
+
+  // Called from QuizDialog when a question is answered
+  const handleQuestionAnswered = (quizId, questionIdx) => {
+    setCategoryProgress(prev => {
+      const prevSet = prev[quizId] ? new Set(prev[quizId]) : new Set();
+      prevSet.add(questionIdx);
+      return { ...prev, [quizId]: prevSet };
+    });
   };
 
   const renderHome = () => (
@@ -213,59 +254,27 @@ function App() {
           </div>
         ) : (
           <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
-            {showResult ? (
-              <div className="text-center">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Αποτέλεσμα</h2>
-                <div className="text-6xl mb-4">
-                  {/* Result will be shown here */}
-                </div>
-              </div>
-            ) : quizQuestions.length > 0 && (
-              <div>
-                <div className="mb-6">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
-                    <span className="text-sm text-gray-600">
-                      Ερώτηση {currentQuestion + 1} από {quizQuestions.length}
-                    </span>
-                    <span className="text-sm font-semibold text-pink-600">
-                      Σκορ: {score} πόντοι
-                    </span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-pink-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-                
-                <h2 className="text-lg sm:text-xl font-semibold mb-6">
-                  {quizQuestions[currentQuestion]?.question}
-                </h2>
-                
-                <div className="space-y-3">
-                  {quizQuestions[currentQuestion]?.options.map((option, index) => (
-                    <button
-                      key={index}
-                      onClick={() => submitAnswer(index)}
-                      disabled={loading}
-                      className="w-full p-4 text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 rounded-lg transition-colors disabled:opacity-50"
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <span className="text-sm text-gray-600">
-                    Αξία: {quizQuestions[currentQuestion]?.points} πόντοι
-                  </span>
-                </div>
-              </div>
-            )}
+            {/* ...existing quiz UI if needed... */}
           </div>
         )}
       </div>
+      {/* QuizMenu modal */}
+      {showQuizMenu && (
+        <QuizMenu
+          quizzes={quizzes}
+          onSelect={handleQuizCategorySelect}
+          onClose={handleMenuClose}
+          categoryProgress={categoryProgress}
+        />
+      )}
+      {/* QuizDialog modal */}
+      <QuizDialog
+        quiz={selectedQuiz}
+        isOpen={isQuizDialogOpen}
+        onClose={handleQuizDialogClose}
+        onQuestionAnswered={handleQuestionAnswered}
+        progress={categoryProgress[selectedQuiz?.id] || new Set()}
+      />
     </div>
   );
 
@@ -546,7 +555,14 @@ function App() {
       {activeTab === 'quiz' && renderQuiz()}
       {activeTab === 'leaderboard' && renderLeaderboard()}
       {activeTab === 'about' && renderAbout()}
-      {activeTab === 'flashcards' && renderflashbacks()}
+      {activeTab === 'flashcards' && (
+      <div className="min-h-screen bg-pink-50 py-8">
+      <div className="container mx-auto px-6 max-w-4xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">Flashcards Επανάληψης</h1>
+      <Flashcards />
+      </div>
+      </div>
+      )}
     </div>
   );
   
