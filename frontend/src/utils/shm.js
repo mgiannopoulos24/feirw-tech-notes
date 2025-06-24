@@ -5,5 +5,5 @@ export const notes = [
     subject: 'Πληροφορική',
     pdfUrl: '/pdfs/notes.pdf',
     price: 10,
-  }
+  },
 ];

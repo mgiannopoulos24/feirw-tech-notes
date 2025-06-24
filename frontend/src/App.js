@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Flashcards from './components/Flashcards.jsx';
 import Sim from './components/Sim.jsx';
- 
+
 import QuizDialog from './components/QuizDialog.jsx';
 import QuizMenu from './components/QuizMenu.jsx';
 import { quizzes } from './utils/quizzes';
-
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
@@ -215,12 +214,12 @@ function App() {
   );
 
   const renderNotes = () => (
-     <div className="min-h-screen bg-pink-50 py-8">
+    <div className="min-h-screen bg-pink-50 py-8">
       <div className="container mx-auto px-6 max-w-4xl">
         <p className="text-lg sm:text-xl text-gray-700 mb-6 text-center font-semibold">
           Εδώ θα βρείτε σημειώσεις για την θεωρία του ΑΕΠΠ.
-        </p> 
-      < Sim />
+        </p>
+        <Sim />
       </div>
     </div>
   );
@@ -288,7 +287,9 @@ function App() {
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
           <h2 className="text-lg sm:text-2xl font-semibold mb-6 text-center">Κατάταξη</h2>
           {leaderboard.length === 0 ? (
-            <p className= "font-semibold text-black mb-2 text-xl bg-pink-100 rounded -lg">Δεν υπάρχουν ακόμα συμμετοχές</p>
+            <p className="font-semibold text-black mb-2 text-xl bg-pink-100 rounded -lg">
+              Δεν υπάρχουν ακόμα συμμετοχές
+            </p>
           ) : (
             <div className="space-y-3">
               {leaderboard.map((entry, index) => (
@@ -309,7 +310,6 @@ function App() {
               ))}
             </div>
           )}
-        
         </div>
       </div>
     </div>
@@ -598,18 +598,8 @@ function App() {
       {activeTab === 'about' && renderAbout()}
 
       {activeTab === 'flashcards' && renderflashcards()}
-      {activeTab === 'flashcards' && (
-        <div className="min-h-screen bg-pink-50 py-8">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">
-              Flashcards Επανάληψης
-            </h1>
-            <Flashcards />
-          </div>
-        </div>
-      )}
     </div>
   );
-  }
+}
 
 export default App;
