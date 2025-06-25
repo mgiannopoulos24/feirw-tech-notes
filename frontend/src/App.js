@@ -25,6 +25,8 @@ function App() {
   const [showQuizMenu, setShowQuizMenu] = useState(false); // <-- Add this
   const [selectedQuiz, setSelectedQuiz] = useState(quizzes[0]); // Default to first quiz
   const [categoryProgress, setCategoryProgress] = useState({}); // {quizId: Set of answered question indices}
+  const [categoryAnswers, setCategoryAnswers] = useState({}); // {quizId: {questionIdx: selectedIdx}}
+  const [showExitWarning, setShowExitWarning] = useState(false);
 
   // Fetch data on component mount
   useEffect(() => {
@@ -109,7 +111,9 @@ function App() {
   };
 
   // Reset progress when menu is closed or quiz is (re)started
-  const resetProgress = () => setCategoryProgress({});
+  const resetProgress = () => {
+    setCategoryAnswers({});
+  };
 
   const startQuiz = () => {
     if (!nickname.trim()) {
@@ -137,10 +141,22 @@ function App() {
 
   // When closing the menu, reset progress
   const handleMenuClose = () => {
+    const hasProgress = Object.values(categoryAnswers).some(obj => Object.keys(obj).length > 0);
+    if (hasProgress) {
+      setShowExitWarning(true);
+    } else {
+      resetProgress();
+      setShowQuizMenu(false);
+      setQuizStarted(false);
+    }
+  };
+  const confirmExit = () => {
+    setShowExitWarning(false);
+    resetProgress();
     setShowQuizMenu(false);
     setQuizStarted(false);
-    resetProgress();
   };
+  const cancelExit = () => setShowExitWarning(false);
 
   // When closing the dialog, show menu again (do not reset progress)
   const handleQuizDialogClose = () => {
@@ -149,11 +165,15 @@ function App() {
   };
 
   // Called from QuizDialog when a question is answered
-  const handleQuestionAnswered = (quizId, questionIdx) => {
-    setCategoryProgress((prev) => {
-      const prevSet = prev[quizId] ? new Set(prev[quizId]) : new Set();
-      prevSet.add(questionIdx);
-      return { ...prev, [quizId]: prevSet };
+  const handleQuestionAnswered = (quizId, questionIdx, selectedIdx) => {
+    setCategoryAnswers(prev => {
+      const prevQuiz = prev[quizId] ? { ...prev[quizId] } : {};
+      // Only set if not already answered
+      if (prevQuiz[questionIdx] === undefined) {
+        prevQuiz[questionIdx] = selectedIdx;
+        return { ...prev, [quizId]: prevQuiz };
+      }
+      return prev;
     });
   };
 
@@ -264,7 +284,7 @@ function App() {
           quizzes={quizzes}
           onSelect={handleQuizCategorySelect}
           onClose={handleMenuClose}
-          categoryProgress={categoryProgress}
+          categoryAnswers={categoryAnswers} // <-- pass this!
         />
       )}
       {/* QuizDialog modal */}
@@ -273,7 +293,7 @@ function App() {
         isOpen={isQuizDialogOpen}
         onClose={handleQuizDialogClose}
         onQuestionAnswered={handleQuestionAnswered}
-        progress={categoryProgress[selectedQuiz?.id] || new Set()}
+        selectedAnswers={categoryAnswers[selectedQuiz?.id] || {}}
       />
     </div>
   );
@@ -598,6 +618,30 @@ function App() {
       {activeTab === 'about' && renderAbout()}
 
       {activeTab === 'flashcards' && renderflashcards()}
+
+      {showExitWarning && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-xl p-8 shadow-xl text-center">
+            <p className="mb-6 text-lg text-pink-700 font-semibold">
+              Αν επιστρέψετε τώρα, η πρόοδός σας θα χαθεί. Θέλετε σίγουρα να συνεχίσετε;
+            </p>
+            <div className="flex justify-center gap-6">
+              <button
+                onClick={confirmExit}
+                className="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-pink-600"
+              >
+                Ναι, έξοδος
+              </button>
+              <button
+                onClick={cancelExit}
+                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300"
+              >
+                Ακύρωση
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
