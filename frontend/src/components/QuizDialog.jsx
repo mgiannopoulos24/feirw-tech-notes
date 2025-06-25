@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { quizzes } from '../utils/quizzes';
 
-const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => {
+const QuizDialog = ({
+  quiz,
+  isOpen,
+  onClose,
+  onQuestionAnswered,
+  selectedAnswers
+}) => {
   const [current, setCurrent] = useState(0);
-  const [selected, setSelected] = useState(null);
   const [showSolution, setShowSolution] = useState(false);
+
+  // Use selectedAnswers for the current question
+  const selected = selectedAnswers?.[current] ?? null;
 
   // Reset state when dialog is reopened or quiz changes
   React.useEffect(() => {
     setCurrent(0);
-    setSelected(null);
     setShowSolution(false);
   }, [isOpen, quiz]);
 
@@ -18,22 +25,17 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
   const question = quiz.questions[current];
 
   const handleSelect = (idx) => {
-    if (selected === null) {
-      setSelected(idx);
-      if (onQuestionAnswered) {
-        onQuestionAnswered(quiz.id, current);
-      }
+    if (selected == null && onQuestionAnswered) {
+      onQuestionAnswered(quiz.id, current, idx);
     }
   };
 
   const handleNext = () => {
-    setSelected(null);
     setShowSolution(false);
     setCurrent((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setSelected(null);
     setShowSolution(false);
     setCurrent((prev) => prev - 1);
   };
@@ -58,7 +60,6 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
           </div>
           <div className="flex flex-col gap-6 mb-16">
             {question.answers.map((ans, idx) => {
-              // Determine color based on answer correctness
               let base = 'rounded-xl px-6 py-3 border-2 transition-all font-semibold shadow-sm';
               let color = '';
               if (selected !== null) {
