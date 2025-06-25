@@ -40,7 +40,7 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, progress }) => 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-pink-50 via-pink-100 to-pink-200 bg-opacity-95 p-4 z-50">
-      <div className="flex flex-col w-full max-w-[1200px] min-h-[600px] rounded-3xl bg-white p-16 shadow-2xl border-4 border-pink-200">
+      <div className="flex flex-col w-full max-w-2xl min-h-2xl rounded-3xl bg-white p-8 shadow-2xl border-4 border-pink-200">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-2xl font-extrabold text-pink-700 mb-5 tracking-wide drop-shadow">
             Ερώτηση {current + 1} από {quiz.questions.length}
