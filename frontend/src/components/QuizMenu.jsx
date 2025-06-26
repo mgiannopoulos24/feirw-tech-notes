@@ -4,9 +4,7 @@ const QuizMenu = ({ quizzes, onSelect, onClose, categoryProgress, categoryAnswer
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
     <div className="bg-pink-50 rounded-xl shadow-2xl p-8 max-w-4xl w-full">
       <div className="mb-6 text-center">
-        <h3 className="text-xl font-bold text-gray-900 mt-6 mb-4">
-          Επιλέξτε Κεφάλαιο για Quiz
-        </h3>
+        <h3 className="text-xl font-bold text-gray-900 mt-6 mb-4">Επιλέξτε Κεφάλαιο για Quiz</h3>
       </div>
       <div className="flex flex-wrap justify-center gap-y-4 gap-x-6 mb-8">
         {quizzes.map((quiz) => {

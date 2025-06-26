@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { quizzes } from '../utils/quizzes';
 
-const QuizDialog = ({
-  quiz,
-  isOpen,
-  onClose,
-  onQuestionAnswered,
-  selectedAnswers
-}) => {
+const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, selectedAnswers }) => {
   const [current, setCurrent] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
 

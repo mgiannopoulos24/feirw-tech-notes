@@ -2,12 +2,48 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Flashcards from './components/Flashcards.jsx';
 import Sim from './components/Sim.jsx';
+import SliderCard from './components/SliderCard.jsx';
+import { Instagram, Youtube } from 'lucide-react';
 
 import QuizDialog from './components/QuizDialog.jsx';
 import QuizMenu from './components/QuizMenu.jsx';
 import { quizzes } from './utils/quizzes';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
+// Add reviews data
+const reviewsData = [
+  {
+    name: 'Μαρία Παπαδοπούλου',
+    rating: 5,
+    description:
+      'Οι σημειώσεις είναι εξαιρετικές! Με βοήθησαν πάρα πολύ να κατανοήσω την ύλη της πληροφορικής. Το quiz είναι διασκεδαστικό και εκπαιδευτικό!',
+  },
+  {
+    name: 'Γιάννης Κωνσταντίνου',
+    rating: 5,
+    description:
+      'Φανταστικό site! Οι flashcards με βοήθησαν να επαναλάβω γρήγορα όλες τις έννοιες. Τώρα νιώθω πιο σίγουρος για τις πανελλαδικές!',
+  },
+  {
+    name: 'Ελένη Δημητρίου',
+    rating: 4,
+    description:
+      'Πολύ καλή πλατφόρμα για προετοιμασία! Οι οπτικοποιήσεις των αλγορίθμων είναι πολύ χρήσιμες. Συνιστώ ανεπιφύλακτα!',
+  },
+  {
+    name: 'Νίκος Αντωνίου',
+    rating: 5,
+    description:
+      'Το leaderboard με κίνητρο να συνεχίσω να εξασκούμαι! Οι ερωτήσεις είναι πολύ καλά δομημένες και με προετοιμάζουν σωστά.',
+  },
+  {
+    name: 'Αγγελική Βασιλείου',
+    rating: 5,
+    description:
+      'Εξαιρετικό εργαλείο μελέτης! Τα παιχνίδια οπτικοποίησης με βοήθησαν να καταλάβω καλύτερα τους αλγορίθμους. Ευχαριστώ πολύ!',
+  },
+];
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -141,7 +177,7 @@ function App() {
 
   // When closing the menu, reset progress
   const handleMenuClose = () => {
-    const hasProgress = Object.values(categoryAnswers).some(obj => Object.keys(obj).length > 0);
+    const hasProgress = Object.values(categoryAnswers).some((obj) => Object.keys(obj).length > 0);
     if (hasProgress) {
       setShowExitWarning(true);
     } else {
@@ -166,7 +202,7 @@ function App() {
 
   // Called from QuizDialog when a question is answered
   const handleQuestionAnswered = (quizId, questionIdx, selectedIdx) => {
-    setCategoryAnswers(prev => {
+    setCategoryAnswers((prev) => {
       const prevQuiz = prev[quizId] ? { ...prev[quizId] } : {};
       // Only set if not already answered
       if (prevQuiz[questionIdx] === undefined) {
@@ -226,6 +262,151 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">Leaderboard</h3>
               <p className="text-gray-600">Ανταγωνιστείτε με άλλους μαθητές!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Reviews Section */}
+      <SliderCard
+        title="Τι λένε οι μαθητές μας"
+        data={reviewsData}
+        containerClassName="bg-white"
+        renderCard={(review, index) => (
+          <div className="bg-pink-50 rounded-xl p-8 text-center">
+            <div className="mb-4">
+              <div className="flex justify-center mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <span
+                    key={i}
+                    className={`text-xl ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                  >
+                    ⭐
+                  </span>
+                ))}
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">{review.name}</h3>
+            </div>
+            <p className="text-gray-600 italic">"{review.description}"</p>
+          </div>
+        )}
+        sliderSettings={{
+          autoplaySpeed: 4000,
+          pauseOnHover: true,
+        }}
+      />
+
+      {/* Contact Section */}
+      <div className="py-16 bg-pink-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">
+            Επικοινωνία
+          </h2>
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+              <p className="text-center text-gray-600 mb-8">
+                Έχετε ερωτήσεις ή προτάσεις; Στείλτε μας μήνυμα και θα επικοινωνήσουμε μαζί σας!
+              </p>
+
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      htmlFor="firstName"
+                      className="flex text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Όνομα *
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
+                      placeholder="Το όνομά σας"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="lastName"
+                      className="flex text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Επώνυμο *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
+                      placeholder="Το επώνυμό σας"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="flex text-sm font-medium text-gray-700 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
+                    placeholder="example@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="flex text-sm font-medium text-gray-700 mb-2">
+                    Μήνυμα *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors resize-none"
+                    placeholder="Γράψτε το μήνυμά σας εδώ..."
+                  />
+                </div>
+
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    className="bg-pink-500 text-white px-8 py-3 rounded-lg hover:bg-pink-600 transition-colors text-lg font-semibold shadow-lg hover:shadow-xl"
+                  >
+                    Αποστολή Μηνύματος
+                  </button>
+                </div>
+              </form>
+
+              {/* Contact Info */}
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Ή επικοινωνήστε μαζί μας στα social media
+                  </h3>
+                  <div className="flex justify-center space-x-6">
+                    <a
+                      href="#"
+                      className="flex items-center space-x-2 text-pink-600 hover:text-pink-700 transition-colors"
+                    >
+                      <Instagram size={20} />
+                      <span className="font-medium">@technotesgr</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center space-x-2 text-pink-600 hover:text-pink-700 transition-colors"
+                    >
+                      <Youtube size={20} />
+                      <span className="font-medium">@technotesgr</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
