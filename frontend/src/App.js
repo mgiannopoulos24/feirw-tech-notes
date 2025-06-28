@@ -82,15 +82,15 @@ function App() {
     fetchLeaderboard();
   }, []);
 
-  // const fetchNotes = async () => {
-  //   try {
-  //     const response = await fetch(`${BACKEND_URL}/api/notes`);
-  //     const data = await response.json();
-  //     setNotes(data.notes || []);
-  //   } catch (error) {
-  //     console.error('Error fetching notes:', error);
-  //   }
-  // };
+  const fetchNotes = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/notes`);
+      const data = await response.json();
+      setNotes(data.notes || []);
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+    }
+  };
 
   const fetchQuizQuestions = async () => {
     try {
