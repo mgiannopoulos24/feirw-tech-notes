@@ -44,6 +44,7 @@ agenthub/agents/youtube/db
 *credentials.json*
 
 venv/
+env/
 .venv/
 __pycache__/
 

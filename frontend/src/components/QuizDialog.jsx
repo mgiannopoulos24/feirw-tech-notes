@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { quizzes } from '../utils/quizzes';
+import React, { useState, useEffect } from 'react';
 
 const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, selectedAnswers }) => {
   const [current, setCurrent] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Use selectedAnswers for the current question
   const selected = selectedAnswers?.[current] ?? null;
 
   // Reset state when dialog is reopened or quiz changes
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrent(0);
     setShowSolution(false);
   }, [isOpen, quiz]);
@@ -18,9 +18,32 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, selectedAnswers
 
   const question = quiz.questions[current];
 
-  const handleSelect = (idx) => {
+  const handleSelect = async (idx) => {
     if (selected == null && onQuestionAnswered) {
-      onQuestionAnswered(quiz.id, current, idx);
+      setLoading(true);
+      try {
+        // Submit answer to backend
+        const response = await fetch('http://localhost:8001/api/quiz/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nickname: localStorage.getItem('nickname') || 'Anonymous',
+            question_id: question.id,
+            selected_answer: idx,
+          }),
+        });
+
+        const result = await response.json();
+
+        // Update local state with answer
+        onQuestionAnswered(quiz.id, current, idx, result.correct, result.points_earned);
+      } catch (error) {
+        console.error('Error submitting answer:', error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -53,35 +76,41 @@ const QuizDialog = ({ quiz, isOpen, onClose, onQuestionAnswered, selectedAnswers
             {question.question}
           </div>
           <div className="flex flex-col gap-6 mb-16">
-            {question.answers.map((ans, idx) => {
-              let base = 'rounded-xl px-6 py-3 border-2 transition-all font-semibold shadow-sm';
-              let color = '';
-              if (selected !== null) {
-                if (ans.correct) {
-                  color = 'bg-green-100 border-green-400 text-green-900';
+            {loading ? (
+              <div className="flex justify-center my-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-pink-500"></div>
+              </div>
+            ) : (
+              question.answers.map((ans, idx) => {
+                let base = 'rounded-xl px-6 py-3 border-2 transition-all font-semibold shadow-sm';
+                let color = '';
+                if (selected !== null) {
+                  if (ans.correct) {
+                    color = 'bg-green-100 border-green-400 text-green-900';
+                  } else {
+                    color = 'bg-red-100 border-red-400 text-red-900';
+                  }
+                  if (selected !== idx) {
+                    color += ' opacity-60';
+                  } else {
+                    color += ' scale-105';
+                  }
                 } else {
-                  color = 'bg-red-100 border-red-400 text-red-900';
+                  color =
+                    'bg-white border-pink-200 text-pink-700 hover:bg-pink-100 hover:border-pink-400 hover:scale-105';
                 }
-                if (selected !== idx) {
-                  color += ' opacity-60';
-                } else {
-                  color += ' scale-105';
-                }
-              } else {
-                color =
-                  'bg-white border-pink-200 text-pink-700 hover:bg-pink-100 hover:border-pink-400 hover:scale-105';
-              }
-              return (
-                <button
-                  key={idx}
-                  onClick={() => handleSelect(idx)}
-                  disabled={selected !== null}
-                  className={`${base} ${color}`}
-                >
-                  {ans.text}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handleSelect(idx)}
+                    disabled={selected !== null}
+                    className={`${base} ${color}`}
+                  >
+                    {ans.text}
+                  </button>
+                );
+              })
+            )}
           </div>
         </div>
         <div className="flex justify-between mt-20">

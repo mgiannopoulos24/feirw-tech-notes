@@ -9,7 +9,7 @@ import QuizDialog from './components/QuizDialog.jsx';
 import QuizMenu from './components/QuizMenu.jsx';
 import { quizzes } from './utils/quizzes';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const BACKEND_URL = 'http://localhost:8001';
 
 // Add reviews data
 const reviewsData = [
@@ -63,6 +63,17 @@ function App() {
   const [categoryProgress, setCategoryProgress] = useState({}); // {quizId: Set of answered question indices}
   const [categoryAnswers, setCategoryAnswers] = useState({}); // {quizId: {questionIdx: selectedIdx}}
   const [showExitWarning, setShowExitWarning] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState(null); // New state for correct answer
+
+  // New states for contact form
+  const [contactForm, setContactForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: '',
+  });
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
 
   // Fetch data on component mount
   useEffect(() => {
@@ -71,20 +82,21 @@ function App() {
     fetchLeaderboard();
   }, []);
 
-  const fetchNotes = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/notes`);
-      const data = await response.json();
-      setNotes(data.notes || []);
-    } catch (error) {
-      console.error('Error fetching notes:', error);
-    }
-  };
+  // const fetchNotes = async () => {
+  //   try {
+  //     const response = await fetch(`${BACKEND_URL}/api/notes`);
+  //     const data = await response.json();
+  //     setNotes(data.notes || []);
+  //   } catch (error) {
+  //     console.error('Error fetching notes:', error);
+  //   }
+  // };
 
   const fetchQuizQuestions = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/quiz/questions`);
       const data = await response.json();
+      // The backend now returns JSON-parsed questions with answers field
       setQuizQuestions(data.questions || []);
     } catch (error) {
       console.error('Error fetching quiz questions:', error);
@@ -102,7 +114,8 @@ function App() {
   };
 
   const submitAnswer = async (selectedAnswer) => {
-    if (!nickname) return;
+    const storedNickname = localStorage.getItem('nickname') || nickname;
+    if (!storedNickname) return;
 
     setLoading(true);
     try {
@@ -112,7 +125,7 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nickname: nickname,
+          nickname: storedNickname,
           question_id: quizQuestions[currentQuestion].id,
           selected_answer: selectedAnswer,
         }),
@@ -123,6 +136,9 @@ function App() {
       if (result.correct) {
         setScore(score + result.points_earned);
       }
+
+      // Show the correct answer
+      setCorrectAnswer(result.correct_answer);
 
       setShowResult(true);
       setTimeout(() => {
@@ -152,15 +168,16 @@ function App() {
   };
 
   const startQuiz = () => {
-    if (!nickname.trim()) {
-      alert('Παρακαλώ εισάγετε ψευδώνυμο');
-      return;
+    if (nickname.trim()) {
+      // Save nickname to localStorage
+      localStorage.setItem('nickname', nickname);
+      setQuizStarted(true);
+      setCurrentQuestion(0);
+      setScore(0);
+      setShowQuizMenu(true);
+    } else {
+      alert('Παρακαλώ εισάγετε το όνομα σας για να ξεκινήσετε το quiz!');
     }
-    setQuizStarted(true);
-    setCurrentQuestion(0);
-    setScore(0);
-    resetProgress(); // Reset progress on new quiz
-    setShowQuizMenu(true);
   };
 
   // Handler for selecting a quiz category
@@ -175,20 +192,13 @@ function App() {
     setIsMenuOpen(false);
   };
 
-  // When closing the menu, reset progress
+  // When closing the menu, don't reset progress
   const handleMenuClose = () => {
-    const hasProgress = Object.values(categoryAnswers).some((obj) => Object.keys(obj).length > 0);
-    if (hasProgress) {
-      setShowExitWarning(true);
-    } else {
-      resetProgress();
-      setShowQuizMenu(false);
-      setQuizStarted(false);
-    }
+    setShowQuizMenu(false);
+    setQuizStarted(false);
   };
   const confirmExit = () => {
     setShowExitWarning(false);
-    resetProgress();
     setShowQuizMenu(false);
     setQuizStarted(false);
   };
@@ -211,6 +221,50 @@ function App() {
       }
       return prev;
     });
+  };
+
+  // New handler for contact form input changes
+  const handleContactInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // New submit function for contact form
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setContactSubmitting(true);
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactForm),
+      });
+
+      const result = await response.json();
+      setContactSuccess(true);
+      setContactForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: '',
+      });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setContactSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      alert('Υπήρξε ένα πρόβλημα κατά την αποστολή της φόρμας. Παρακαλώ δοκιμάστε ξανά.');
+    }
+
+    setContactSubmitting(false);
   };
 
   const renderHome = () => (
@@ -308,7 +362,7 @@ function App() {
                 Έχετε ερωτήσεις ή προτάσεις; Στείλτε μας μήνυμα και θα επικοινωνήσουμε μαζί σας!
               </p>
 
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -322,6 +376,8 @@ function App() {
                       id="firstName"
                       name="firstName"
                       required
+                      value={contactForm.firstName}
+                      onChange={handleContactInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
                       placeholder="Το όνομά σας"
                     />
@@ -339,6 +395,8 @@ function App() {
                       id="lastName"
                       name="lastName"
                       required
+                      value={contactForm.lastName}
+                      onChange={handleContactInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
                       placeholder="Το επώνυμό σας"
                     />
@@ -354,6 +412,8 @@ function App() {
                     id="email"
                     name="email"
                     required
+                    value={contactForm.email}
+                    onChange={handleContactInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
                     placeholder="example@email.com"
                   />
@@ -368,6 +428,8 @@ function App() {
                     name="message"
                     rows={5}
                     required
+                    value={contactForm.message}
+                    onChange={handleContactInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors resize-none"
                     placeholder="Γράψτε το μήνυμά σας εδώ..."
                   />
@@ -377,11 +439,19 @@ function App() {
                   <button
                     type="submit"
                     className="bg-pink-500 text-white px-8 py-3 rounded-lg hover:bg-pink-600 transition-colors text-lg font-semibold shadow-lg hover:shadow-xl"
+                    disabled={contactSubmitting}
                   >
-                    Αποστολή Μηνύματος
+                    {contactSubmitting ? 'Αποστολή...' : 'Αποστολή Μηνύματος'}
                   </button>
                 </div>
               </form>
+
+              {contactSuccess && (
+                <div className="mt-4 text-center text-green-600">
+                  <p className="font-semibold">Το μήνυμά σας εστάλη επιτυχώς!</p>
+                  <p className="text-sm">Θα επικοινωνήσουμε μαζί σας σύντομα.</p>
+                </div>
+              )}
 
               {/* Contact Info */}
               <div className="mt-8 pt-8 border-t border-gray-200">
@@ -621,7 +691,7 @@ function App() {
               <button
                 onClick={() => setActiveTab('flashcards')}
                 className={`py-2 px-4 rounded transition-colors ${
-                  activeTab === 'flashcards '
+                  activeTab === 'flashcards'
                     ? 'bg-pink-500 text-white'
                     : 'text-gray-700 hover:text-pink-500'
                 }`}
