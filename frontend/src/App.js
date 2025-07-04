@@ -9,6 +9,8 @@ import QuizDialog from './components/QuizDialog.jsx';
 import QuizMenu from './components/QuizMenu.jsx';
 import { quizzes } from './utils/quizzes';
 
+import technotesLogo from './assets/technotes_logo.JPG';
+
 const BACKEND_URL = 'http://localhost:8001';
 
 // Add reviews data
@@ -282,7 +284,12 @@ function App() {
         <div className="container mx-auto px-6 text-center">
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 bg-pink-200 rounded-lg flex items-center justify-center">
-              <span className="text-2xl">💖</span>
+              <img
+                src={technotesLogo}
+                alt="Technotesgr Logo"
+                className="object-contain w-full h-full"
+              />
+              {/* <span className="text-2xl">💖</span> */}
             </div>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Technotesgr</h1>
@@ -659,7 +666,13 @@ function App() {
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-pink-400 rounded flex items-center justify-center"></div>
+              <div className="w-8 h-8 bg-pink-400 rounded flex items-center justify-center overflow-hidden">
+                <img
+                  src={technotesLogo}
+                  alt="Technotesgr Logo"
+                  className="object-contain w-full h-full"
+                />
+              </div>
               <span className="text-xl font-bold text-gray-800">technotesgr</span>
             </div>
 
